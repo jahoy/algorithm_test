@@ -1,26 +1,19 @@
-class Solution:
-    def subarraySum(self, nums: List[int], k: int) -> int:
-        n = len(nums)
-        if n == 1:
-            if nums[0] == k:
-                return 1
-            else:
-                return 0
-        
-        left = 0
-        right = 0
-        count = 0
-        current_sum = nums[0]
-        while left < n and right < n:
-            if k > current_sum and right + 1 < n:
-                right += 1
-                current_sum += nums[right]
-            elif k < current_sum:
-                current_sum -= nums[left]
-                left += 1
-            elif k == current_sum:
-                count += 1
-                right += 1
-        return count
-
-
+class Solution(object):
+    def subarraySum(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        running_sum = 0
+        hash_table = collections.defaultdict(lambda:0)
+        total = 0
+        for x in nums:
+            running_sum += x
+            sum = running_sum - k
+            if sum in hash_table:
+                total += hash_table[sum]
+            if running_sum == k:
+                total += 1
+            hash_table[running_sum] += 1
+        return total
