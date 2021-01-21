@@ -15,3 +15,5 @@ for i in range(1, len1 + 1):
         else:
             matrix[i][j] = max(matrix[i-1][j], matrix[i][j-1])
 print(matrix[-1][-1])
+
+

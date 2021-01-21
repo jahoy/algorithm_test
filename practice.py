@@ -1,17 +1,13 @@
-def practice(s:str) -> int:
-    left = 0;
-    right = 0;
-    
-    n = len(s)
-    memo = set()
-    longgest = 0
-    while left < n and right < n:
-        if s[right] not in memo:
-            memo.add(s[right])
-            longgest = max(longgest, right-left+1)
-            right += 1;
-        else:
-            memo.removes(s[left])
-            left += 1;
-    
-    return longgest
+from collections import Counter
+import heapq
+
+
+heap = [-x for x in Counter.values()]
+heapq.heapify(heap)
+count = 0
+while len(heap) >= 2:
+    max_  =heapq.heappop(heap)
+    if max_ == heap[0]:
+        count += 1
+        if max_ + 1 != 0:
+            heapq.heappush(heap, max+ +)
