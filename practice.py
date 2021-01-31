@@ -1,18 +1,9 @@
 class Solution:
-    def longest_palindrome(self, s:str) -> str:
-        def helper(l, r):
-            while(l >= 0 and r < len(s) and s[l] == s[r]):
-                l -= 1
-                r += 1
-            return s[l+1:r]
-        
-        res  = ""
+    def max_subarray(self, nums: List[int]) -> int:
+        total_sum = max_sum = nums[0]
 
-        for i in range(len(s)):
-            test = helper(i,i)
-            if len(test) > len(res): res = test
+        for num in nums[1:]:
+            total_sum = max(total_sum + num, num)
+            max_sum = max(max_sum, total_sum)
 
-            test = helper(i,i+1)
-            if len(test) > len(res): res = test
-        
-        return res
+        return max_sum
