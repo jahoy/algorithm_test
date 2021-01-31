@@ -1,11 +1,12 @@
-def rob(nums:List[int])-> int:
-    if not nums: return 0
-    if len(nums) < 3: return max(nums)
+class Solution:
+    def max_product(self, nums:List[int])->int:
+        largest_product = most_ps_product = most_neg_product = nums[0]
 
-    dp = [0] * len(nums)
-    dp[0] = nums[0]
-    dp[1] = max(nums[0], nums[1])
+        for i in range(1, len(nums)):
+            x = max(nums[i], most_ps_product * nums[i], most_neg_product * nums[i])
+            y = min(nums[i], most_ps_product * nums[i], most_neg_product * nums[i])
 
-    for i in range(2, len(nums)):
-        dp[i] = max(nums[i] + dp[i-2], dp[i-1])
-    return dp[-1]
+            most_ps_product, most_neg_product = x, y
+            largest_product = max(largest_product, most_ps_product)
+
+        return largest_product
