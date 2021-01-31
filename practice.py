@@ -1,12 +1,11 @@
-class Solution:
-    def max_product(self, nums:List[int])->int:
-        largest_product = most_ps_product = most_neg_product = nums[0]
+letters = []
+l, r = 0, len(letters) - 1
 
-        for i in range(1, len(nums)):
-            x = max(nums[i], most_ps_product * nums[i], most_neg_product * nums[i])
-            y = min(nums[i], most_ps_product * nums[i], most_neg_product * nums[i])
+while l < r:
+    mid = (l + r ) // 2
+    if target < letters[mid]:
+        r = mid
+    elif target >= letters[mid]:
+        l = mid + 1
 
-            most_ps_product, most_neg_product = x, y
-            largest_product = max(largest_product, most_ps_product)
-
-        return largest_product
+return letters[r]
