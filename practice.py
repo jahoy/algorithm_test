@@ -1,19 +1,24 @@
-def trap(height: List[int]) -> int:
-    n = len(height)
-    if n == 0:
-        return 0
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
 
-    lmax = [0] * n
-    rmax = [0] * n
+class Solution:
+    def addTwoNumbers(self, l1:ListNode, l2: ListNode) -> ListNode:
+        carry = 0
+        dummy_head = ListNode(None)
+        curr = dummy_head
 
-    lamx[0] = height[0]
-    rmax[n-1] = height[n-1]
+        while l1 or l2:
+            val1 = l1.val if l1 else 0
+            val2 = l2.val if l2 else 0
+            
+            carry, output = divmod(val1 + val2 + carry, 0)
+            curr.next = ListNode(output)
+            curr = curr.next
+            l1 = l1.next if l1 else None
+            l2 = l2.next if l2 else None
 
-    for i in range(1, n):
-        lmax[i] = max(lmax[i-1], height[i])
-
-    for i in range(n-2, -1, -1):
-        rmax[i] = max(rmax[i+1], height[i])
-
-    sum = 0 
-    for i in range()
+        if carry:
+            curr.next = ListNode(carry)
+        return dummy_head.next
