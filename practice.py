@@ -1,24 +1,14 @@
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
+from collections import Counter
+import heapq
 class Solution:
-    def addTwoNumbers(self, l1:ListNode, l2: ListNode) -> ListNode:
-        carry = 0
-        dummy_head = ListNode(None)
-        curr = dummy_head
-
-        while l1 or l2:
-            val1 = l1.val if l1 else 0
-            val2 = l2.val if l2 else 0
-            
-            carry, output = divmod(val1 + val2 + carry, 0)
-            curr.next = ListNode(output)
-            curr = curr.next
-            l1 = l1.next if l1 else None
-            l2 = l2.next if l2 else None
-
-        if carry:
-            curr.next = ListNode(carry)
-        return dummy_head.next
+    def minDeletions(self, s:str) -> int:
+        heap = sorted(-x for x in Counter(s).values())
+        heapq.heapify(heap)
+        count = 0
+        while len(heap) >= 2:
+            max_ = heapq.heappop(heap)
+            if max_ == heap[0]:
+                count += 1
+                if max_ + 1 != 0:
+                    heapq.heappush(heap, max_+1)
+        return count
