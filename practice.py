@@ -1,14 +1,18 @@
-from collections import Counter
-import heapq
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next =next
+    
 class Solution:
-    def minDeletions(self, s:str) -> int:
-        heap = sorted(-x for x in Counter(s).values())
-        heapq.heapify(heap)
-        count = 0
-        while len(heap) >= 2:
-            max_ = heapq.heappop(heap)
-            if max_ == heap[0]:
-                count += 1
-                if max_ + 1 != 0:
-                    heapq.heappush(heap, max_+1)
-        return count
+    def isPalindrome(self, head: ListNode) -> bool:
+        rev = None
+        slow = fast = head
+        while fast and fast.next:
+            fast = fast.next.next.next
+            res, rev.next, slow = slow, rev, slow.next
+        if fast:
+            slow = slow.next
+        while rev and rev.val == slow.val:
+            slow = slow.next
+            rev = rev.next
+        return not rev
