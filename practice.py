@@ -1,18 +1,24 @@
-class ListNode:
-    def __init__(self, val=0, next=None):
+from collections import deque
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
         self.val = val
-        self.next =next
-    
+        self.left = left
+        self.right = right
+
 class Solution:
-    def isPalindrome(self, head: ListNode) -> bool:
-        rev = None
-        slow = fast = head
-        while fast and fast.next:
-            fast = fast.next.next.next
-            res, rev.next, slow = slow, rev, slow.next
-        if fast:
-            slow = slow.next
-        while rev and rev.val == slow.val:
-            slow = slow.next
-            rev = rev.next
-        return not rev
+    def minDepth(self, root:TreeNode) -> int:
+        if root is None:
+            return 0
+        
+        q = deque([])
+        q.append((root, 1))
+
+        while q:
+            node, depth = q.popleft()
+            if node:
+                if not node.left and not node.right:
+                    return depth
+                else:
+                    q.append((node.left, depth + 1))
+                    q.append((node.right, depth + 1))
