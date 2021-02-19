@@ -1,24 +1,26 @@
-from collections import deque
+SELECT
+premium_demand_per_supply_2,
+avg(premium_dropoff_ratio_2) as avg_premium_dropoff_ratio_2,
+stddev(premium_dropoff_ratio_2) as std_premium_dropoff_ratio_2,
 
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+avg(premium_ride_distance_meters_per_total_move_meters) as avg_premium_ride_distance_meters_per_total_move_meters,
+stddev(premium_ride_distance_meters_per_total_move_meters) as std_premium_ride_distance_meters_per_total_move_meters,
+avg(premium_riding_ratio) as avg_premium_riding_ratio,
+stddev(premium_riding_ratio) as std_premium_riding_ratio,
 
-class Solution:
-    def minDepth(self, root:TreeNode) -> int:
-        if root is None:
-            return 0
-        
-        q = deque([])
-        q.append((root, 1))
+avg(premium_c_dropoff_per_working_hour) as avg_premium_c_dropoff_per_working_hour,
+stddev(premium_c_dropoff_per_working_hour) as std_premium_c_dropoff_per_working_hour,
 
-        while q:
-            node, depth = q.popleft()
-            if node:
-                if not node.left and not node.right:
-                    return depth
-                else:
-                    q.append((node.left, depth + 1))
-                    q.append((node.right, depth + 1))
+avg(premium_sum_receipt_total_per_working_hour) as avg_premium_sum_receipt_total_per_working_hour,
+stddev(premium_sum_receipt_total_per_working_hour) as std_premium_sum_receipt_total_per_working_hour,
+avg(premium_sum_non_surge_receipt_total_per_working_hour) as avg_premium_sum_non_surge_receipt_total_per_working_hour,
+stddev(premium_sum_non_surge_receipt_total_per_working_hour) as std_premium_sum_non_surge_receipt_total_per_working_hour,
+
+avg(premium_sum_receipt_total_minus_sum_daily_fuel_cost_per_working_hour) as avg_premium_sum_receipt_total_minus_sum_daily_fuel_cost_per_working_hour,
+stddev(premium_sum_receipt_total_minus_sum_daily_fuel_cost_per_working_hour) as std_premium_sum_receipt_total_minus_sum_daily_fuel_cost_per_working_hour,
+avg(premium_sum_non_receipt_total_minus_sum_daily_fuel_cost_per_working_hour) as avg_premium_sum_non_receipt_total_minus_sum_daily_fuel_cost_per_working_hour,
+stddev(premium_sum_non_receipt_total_minus_sum_daily_fuel_cost_per_working_hour) as std_premium_sum_non_receipt_total_minus_sum_daily_fuel_cost_per_working_hour,
+
+FROM METRIC_DATA
+GROUP BY premium_demand_per_supply_2
+ORDER BY premium_demand_per_supply_2
