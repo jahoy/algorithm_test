@@ -1,26 +1,14 @@
-SELECT
-premium_demand_per_supply_2,
-avg(premium_dropoff_ratio_2) as avg_premium_dropoff_ratio_2,
-stddev(premium_dropoff_ratio_2) as std_premium_dropoff_ratio_2,
+# https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/
 
-avg(premium_ride_distance_meters_per_total_move_meters) as avg_premium_ride_distance_meters_per_total_move_meters,
-stddev(premium_ride_distance_meters_per_total_move_meters) as std_premium_ride_distance_meters_per_total_move_meters,
-avg(premium_riding_ratio) as avg_premium_riding_ratio,
-stddev(premium_riding_ratio) as std_premium_riding_ratio,
-
-avg(premium_c_dropoff_per_working_hour) as avg_premium_c_dropoff_per_working_hour,
-stddev(premium_c_dropoff_per_working_hour) as std_premium_c_dropoff_per_working_hour,
-
-avg(premium_sum_receipt_total_per_working_hour) as avg_premium_sum_receipt_total_per_working_hour,
-stddev(premium_sum_receipt_total_per_working_hour) as std_premium_sum_receipt_total_per_working_hour,
-avg(premium_sum_non_surge_receipt_total_per_working_hour) as avg_premium_sum_non_surge_receipt_total_per_working_hour,
-stddev(premium_sum_non_surge_receipt_total_per_working_hour) as std_premium_sum_non_surge_receipt_total_per_working_hour,
-
-avg(premium_sum_receipt_total_minus_sum_daily_fuel_cost_per_working_hour) as avg_premium_sum_receipt_total_minus_sum_daily_fuel_cost_per_working_hour,
-stddev(premium_sum_receipt_total_minus_sum_daily_fuel_cost_per_working_hour) as std_premium_sum_receipt_total_minus_sum_daily_fuel_cost_per_working_hour,
-avg(premium_sum_non_receipt_total_minus_sum_daily_fuel_cost_per_working_hour) as avg_premium_sum_non_receipt_total_minus_sum_daily_fuel_cost_per_working_hour,
-stddev(premium_sum_non_receipt_total_minus_sum_daily_fuel_cost_per_working_hour) as std_premium_sum_non_receipt_total_minus_sum_daily_fuel_cost_per_working_hour,
-
-FROM METRIC_DATA
-GROUP BY premium_demand_per_supply_2
-ORDER BY premium_demand_per_supply_2
+class Solution:
+    def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
+        numbers = set()
+        missing_nums = []
+        for num in nums:
+            numbers.add(num)
+        
+        for i in range(1, len(nums) + 1):
+            if i not in numbers:
+                missing_nums.append(i)
+        
+        return missing_nums
