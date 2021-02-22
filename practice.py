@@ -1,14 +1,23 @@
-# https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/
+# https://leetcode.com/problems/palindrome-linked-list/
+# https://www.youtube.com/watch?v=fDOBOBYVV0A&ab_channel=AIHolic
+# https://inspirit941.tistory.com/entry/Python-LeetCode-234-Palindrome-Linked-List
 
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
 class Solution:
-    def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
-        numbers = set()
-        missing_nums = []
-        for num in nums:
-            numbers.add(num)
-        
-        for i in range(1, len(nums) + 1):
-            if i not in numbers:
-                missing_nums.append(i)
-        
-        return missing_nums
+    def isPalindrome(self, head: ListNode) -> bool:
+        rev = None
+        slow = fast = head
+        while fast and fast.next:
+            fast = fast.next.next
+            rev, rev.next, slow = slow, rev, slow.next
+        if fast:
+            slow = slow.next
+        while rev and rev.val == slow.val:
+            slow = slow.next
+            rev = rev.next
+        return not rev
