@@ -1,23 +1,17 @@
-# https://leetcode.com/problems/palindrome-linked-list/
-# https://www.youtube.com/watch?v=fDOBOBYVV0A&ab_channel=AIHolic
-# https://inspirit941.tistory.com/entry/Python-LeetCode-234-Palindrome-Linked-List
+# https://leetcode.com/problems/minimum-size-subarray-sum/
+# https://leetcode.com/problems/minimum-size-subarray-sum/discuss/59093/Python-O(n)-and-O(n-log-n)-solution
 
 
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
 class Solution:
-    def isPalindrome(self, head: ListNode) -> bool:
-        rev = None
-        slow = fast = head
-        while fast and fast.next:
-            fast = fast.next.next
-            rev, rev.next, slow = slow, rev, slow.next
-        if fast:
-            slow = slow.next
-        while rev and rev.val == slow.val:
-            slow = slow.next
-            rev = rev.next
-        return not rev
+    def minSubArrayLen(self, s: int, nums: List[int]) -> int:
+        left , total = 0, 0
+        
+        result = float('inf')
+        for right, num in enumerate(nums):
+            total += nums[right]
+            while total >= s and left <= right:
+                result = min(result, right - left + 1)
+                total -= nums[left]
+                left += 1
+        
+        return result if result <= len(nums) else 0
