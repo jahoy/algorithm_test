@@ -1,14 +1,35 @@
-# https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/
+# https://leetcode.com/problems/binary-tree-right-side-view/
+# https://www.youtube.com/watch?v=uHNb6lwuNyE&ab_channel=TheCodingManual
 
+
+from collections import deque
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
-    def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
-        numbers = set()
-        missing_nums = []
-        for num in nums:
-            numbers.add(num)
+    def rightSideView(self, root: TreeNode) -> List[int]:
+        if not root:
+            return []
         
-        for i in range(1, len(nums) + 1):
-            if i not in numbers:
-                missing_nums.append(i)
+        q = deque([])
+        q.append(root)
         
-        return missing_nums
+        result = []
+        while q:
+            current_level_list = []
+            for i in range(len(q)):
+                node = q.popleft()
+                current_level_list.append(node.val)
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+            result.append(current_level_list[-1])
+        return result
+                    
+                    
+                    
