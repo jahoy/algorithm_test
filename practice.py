@@ -1,35 +1,24 @@
-# https://leetcode.com/problems/binary-tree-right-side-view/
-# https://www.youtube.com/watch?v=uHNb6lwuNyE&ab_channel=TheCodingManual
+# https://leetcode.com/problems/trapping-rain-water/
+# https://www.youtube.com/watch?v=86W0kLc2tc4&ab_channel=AIHolic
 
-
-from collections import deque
-
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
 class Solution:
-    def rightSideView(self, root: TreeNode) -> List[int]:
-        if not root:
-            return []
+    def trap(self, height: List[int]) -> int:
+        n = len(height)
+        if n == 0:
+            return 0
+        lmax = [0] * n
+        rmax = [0] * n
         
-        q = deque([])
-        q.append(root)
+        lmax[0] = height[0]
+        rmax[n-1] = height[n-1] 
+        for i in range(1, n):
+            lmax[i] = max(lmax[i-1], height[i])
+            
+        for i in range(n-2, -1, -1):
+            rmax[i] = max(rmax[i+1], height[i])
         
-        result = []
-        while q:
-            current_level_list = []
-            for i in range(len(q)):
-                node = q.popleft()
-                current_level_list.append(node.val)
-                if node.left:
-                    q.append(node.left)
-                if node.right:
-                    q.append(node.right)
-            result.append(current_level_list[-1])
-        return result
-                    
-                    
-                    
+        sum = 0
+        for i in range(n):
+            sum += min(lmax[i], rmax[i]) - height[i]
+        
+        return sum
