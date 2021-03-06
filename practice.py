@@ -1,24 +1,28 @@
-# https://leetcode.com/problems/trapping-rain-water/
-# https://www.youtube.com/watch?v=86W0kLc2tc4&ab_channel=AIHolic
+# https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/
+# https://www.youtube.com/watch?v=iUSXEvV2IUA&feature=youtu.be&ab_channel=BrainRefactor
+# https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/discuss/152682/Python-simple-recursive-solution-with-detailed-explanation
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
 
 class Solution:
-    def trap(self, height: List[int]) -> int:
-        n = len(height)
-        if n == 0:
-            return 0
-        lmax = [0] * n
-        rmax = [0] * n
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        if root == p or root == q:
+            return root
         
-        lmax[0] = height[0]
-        rmax[n-1] = height[n-1] 
-        for i in range(1, n):
-            lmax[i] = max(lmax[i-1], height[i])
+        left, right = None, None
+        
+        if root.left:
+            left = self.lowestCommonAncestor(root.left, p, q)
+        if root.right:
+            right = self.lowestCommonAncestor(root.right, p, q)
             
-        for i in range(n-2, -1, -1):
-            rmax[i] = max(rmax[i+1], height[i])
+        if left and right:
+            return root
+        else:
+            return left or right
         
-        sum = 0
-        for i in range(n):
-            sum += min(lmax[i], rmax[i]) - height[i]
-        
-        return sum
