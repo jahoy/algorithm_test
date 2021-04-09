@@ -1,17 +1,16 @@
-# https://leetcode.com/problems/minimum-size-subarray-sum/
-# https://leetcode.com/problems/minimum-size-subarray-sum/discuss/59093/Python-O(n)-and-O(n-log-n)-solution
-
-
 class Solution:
-    def minSubArrayLen(self, s: int, nums: List[int]) -> int:
-        left , total = 0, 0
+    def isPalindrome(self, head: ListNode) -> bool:
+        rev = None
+        slow = fast = head
+        while fast and fast.next:
+            fast = fast.next.next
+            rev, rev.next, slow = slow, rev, slow.next
         
-        result = float('inf')
-        for right, num in enumerate(nums):
-            total += nums[right]
-            while total >= s and left <= right:
-                result = min(result, right - left + 1)
-                total -= nums[left]
-                left += 1
+        if fast:
+            slow = slow.next
+        while rev and rev.val == slow.val:
+            slow = slow.next
+            rev = rev.next
+        return not rev
+
         
-        return result if result <= len(nums) else 0
