@@ -1,16 +1,11 @@
 class Solution:
-    def isPalindrome(self, head: ListNode) -> bool:
-        rev = None
-        slow = fast = head
-        while fast and fast.next:
-            fast = fast.next.next
-            rev, rev.next, slow = slow, rev, slow.next
-        
-        if fast:
-            slow = slow.next
-        while rev and rev.val == slow.val:
-            slow = slow.next
-            rev = rev.next
-        return not rev
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        N = len(nums)
+        dp = [1] * N
 
-        
+        for i in range(N):
+            for j in range(i):
+                if nums[i] > nums[j]:
+                    dp[i] = max(dp[i], dp[j] + 1)
+
+        return max(dp)        
