@@ -1,31 +1,19 @@
 import sys
-sys.setrecursionlimit(50000)
 input = sys.stdin.readline
 
-dx = (-1, 1, 0, 0)
-dy = (0, 0, -1 , 1)
+N, S = map(int, input().split())
+arr = list(map(int, input().split()))
 
-def dfs(x, y):
-    visited[y][x] = True
-    for i in range(4):
-        nx = x + dx[i]
-        ny = y + dy[i]
-        if 0 <= nx < M and 0 <= ny < N and not visited[ny][nx] and matrix[ny][nx] == 1:
-            dfs(nx, ny)
+ans = 0
 
-T = int(input())
-for _ in range(T):
-    M, N, K = map(int, input().split())
-    count = 0
-    matrix = [[0] * 50 for _ in range(50)]
-    visited = [[False] * 50 for _ in range(50)]
+def dfs(index, total):
+    global ans
+    if index == N:
+        return
+    if total + arr[index] == S:
+        ans += 1
+    dfs(index + 1, total)
+    dfs(index + 1, total + arr[index])
 
-    for _ in range(K):
-        x, y = map(int, input().split())
-        matrix[y][x] = 1
-    for y in range(N):
-        for x in range(M):
-            if matrix[y][x] == 1 and not visited[y][x]:
-                dfs(x, y)
-                count += 1
-    print(count)
+dfs(0, 0)
+print(ans)
