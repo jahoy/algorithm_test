@@ -1,23 +1,12 @@
-
 class Solution:
-    def productExceptSelf(self, nums):
-        """[summary]
+    def findDuplicates(self, nums:List[int]) -> List[int]:
+        ans = []
+        for num in nums:
+            value = abs(num)
 
-        Args:
-            nums (LIST[int])
-        Output:
-            List[int]
-        """
-
-        output = [1] * len(nums)
-        lprod = 1
-        rprod = 1
-
-        for i in range(len(nums)):
-            output[i] *= lprod
-            lprod *= nums[i]
-            
-            output[~i] *= rprod
-            rprod *= nums[~i]
+            if nums[value - 1] < 0:
+                ans.append(value)
+            else:
+                nums[value - 1] *= -1
         
-        return output
+        return ans
