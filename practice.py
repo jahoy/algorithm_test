@@ -1,20 +1,13 @@
 class Solution:
-    def longestConsecutive(self, nums:List[int])->int:
-        num_set = set(nums)
-        max_len = 0
-        while num_set:
-            position = num_set.pop()
+    def merge(self, intervals:List[List[int]]) -> List[List[int]]:
+        if len(intervals) < 2:
+            return intervals
+        intervals.sort()
 
-            first = position
-            while first - 1 in num_set:
-                first -= 1
-                num_set.remove(first)
-
-            last = position
-            while last + 1 in num_set:
-                last += 1
-                num_set.remove(last)
-
-            max_len = max(max_len, last - first + 1)
-
-        return max_len
+        output = [intervals[0]]
+        for start, end in intervals[1:]:
+            if output[-1][1] < start:
+                output.append([start, end])
+            elif start <= output[-1][1] < end:
+                output[-1][1] = end
+        return output
