@@ -1,31 +1,20 @@
 class Solution:
-    def sprialOrdrer(self, matrix: List[List[int]]) -> List[int]:
-        if not matrix:
-            return []
-        
-        row_start, row_end, col_start, col_end = 0, len(matrix) - 1, 0, len(matrix[0]) - 1
-        output = []
+    def longestConsecutive(self, nums:List[int])->int:
+        num_set = set(nums)
+        max_len = 0
+        while num_set:
+            position = num_set.pop()
 
-        while row_start <= row_end or col_start <= col_end:
-            # right
-            if row_start <= row_end:
-                output.extend([matrix[row_start][i]for i in range(col_start, col_end+1)])
-                row_start += 1
+            first = position
+            while first - 1 in num_set:
+                first -= 1
+                num_set.remove(first)
 
-            # down
-            if col_start <= col_end:
-                output.extend([matrix[i][col_end] for i in range(row_start, row_end + 1)])
-                col_end -= 1
+            last = position
+            while last + 1 in num_set:
+                last += 1
+                num_set.remove(last)
 
-            # left
-            if row_start <= row_end:
-                output.extend([matrix[row_end][i] for i in range(col_end, col_start -1, -1)])
-                row_end -= 1
+            max_len = max(max_len, last - first + 1)
 
-            # up
-            if col_start <= col_end:
-                output.extend([matrix[i][col_start] for i in range(row_end, row_start -1, -1)])
-                col_start += 1
-
-
-        return output
+        return max_len
