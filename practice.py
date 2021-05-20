@@ -1,19 +1,23 @@
-import sys
-input = sys.stdin.readline
 
-N, S = map(int, input().split())
-arr = list(map(int, input().split()))
+class Solution:
+    def productExceptSelf(self, nums):
+        """[summary]
 
-ans = 0
+        Args:
+            nums (LIST[int])
+        Output:
+            List[int]
+        """
 
-def dfs(index, total):
-    global ans
-    if index == N:
-        return
-    if total + arr[index] == S:
-        ans += 1
-    dfs(index + 1, total)
-    dfs(index + 1, total + arr[index])
+        output = [1] * len(nums)
+        lprod = 1
+        rprod = 1
 
-dfs(0, 0)
-print(ans)
+        for i in range(len(nums)):
+            output[i] *= lprod
+            lprod *= nums[i]
+            
+            output[~i] *= rprod
+            rprod *= nums[~i]
+        
+        return output
