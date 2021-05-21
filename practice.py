@@ -1,11 +1,9 @@
 class Solution:
-    def moveZeros(self, nums:List[int]) -> None:
-        slow = 0
-        for fast in range(len(nums)):
-            if nums[fast] != 0 and nums[slow] == 0:
-                nums[fast], nums[slow] = nums[slow], nums[fast]
-            
-            if nums[slow] != 0:
-                slow += 1
-        
-        return nums
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        hash_map = {}
+
+        for i, num in enumerate(numbers):
+            if target - num in hash_map:
+                return [hash_map[target-num]+1, i+1]
+            else:
+                hash_map[num] = i
