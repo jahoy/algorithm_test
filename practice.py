@@ -1,21 +1,14 @@
 class Solution:
-    def trap(self, height: List[int]) -> int:
-        n = len(height)
-        if n == 0:
-            return 0
-
-        lmax = [0] * n
-        rmax = [0] * n
-
-        lmax[0] = height[0]
-        rmax[n-1] = height[n-1]
-        for i in range(1, n):
-            lmax[i] = max(lmax[i-1], height[i])
-        for i in range(n-2, -1, -1):
-            rmax[i] = max(rmax[i+1], height[i])
-
-        sum = 0
-        for i in range(n):
-            sum += min(lmax[i], rmax[i]) - height[i]
-
-        return sum
+    def subarraySum(self, nums, k):
+        running_sum = 0
+        hash_table = collections.defaultdict(lambda:0)
+        total = 0 
+        for x in nums:
+            running_sum += x
+            sum = running_sum - k
+            if sum in hash_table:
+                total += hash_table[sum]
+            if running_sum == k:
+                total += 1
+            hash_table[running_sum] += 1
+        return total
