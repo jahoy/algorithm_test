@@ -1,30 +1,28 @@
 class Solution:
-    def threeSum(self, nums:List[int])-> List[List[int]]:
+    def threeSumClosest(self, nums:List[int], target:int) -> int:
         length = len(nums)
-        output = []
+        if length < 3:
+            return
         nums.sort()
 
-        for pointer in range(length - 1):
-            if pointer > 0 and nums[pointer] == nums[pointer -1]:
-                continue
+        result = float('inf')
 
+        for pointer in range(length - 2):
             left = pointer + 1
             right = length - 1
 
             while left < right:
                 total = nums[pointer] + nums[left] + nums[right]
 
-                if total < 0:
-                    left += 1
-                elif total > 0:
+                if abs(total - target) == 0:
+                    return total
+                
+                if abs(total - target) < abs(result - target):
+                    result = total
+                
+                if total < target:
+                    left += 1 
+                elif total > target:
                     right -= 1
-                elif total == 0:
-                    output.append([nums[pointer], nums[left], nums[right]])
-                    while left < right and nums[left] == nums[left + 1]:
-                        left += 1
-                    while left < right and nums[right] == nums[right - 1]:
-                        right -= 1
-                    
-                    left += 1
-                    right -= 1
-            return output
+
+        return result
