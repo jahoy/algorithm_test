@@ -1,11 +1,21 @@
 class Solution:
-    def isPalindrome(self, s:str) -> bool:
-        l, r = 0, len(s)-1
+    def trap(self, height: List[int]) -> int:
+        n = len(height)
+        if n == 0:
+            return 0
 
-        while l < r:
-            while l < r and not s[l].isalnum():
-                l += 1
-            while l < r and not s[r].isalnum():
-                r -= 1
-            if s[l].lower() != s[r].lower():
-                return False
+        lmax = [0] * n
+        rmax = [0] * n
+
+        lmax[0] = height[0]
+        rmax[n-1] = height[n-1]
+        for i in range(1, n):
+            lmax[i] = max(lmax[i-1], height[i])
+        for i in range(n-2, -1, -1):
+            rmax[i] = max(rmax[i+1], height[i])
+
+        sum = 0
+        for i in range(n):
+            sum += min(lmax[i], rmax[i]) - height[i]
+
+        return sum
