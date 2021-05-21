@@ -1,9 +1,11 @@
 class Solution:
-    def twoSum(self, numbers: List[int], target: int) -> List[int]:
-        hash_map = {}
+    def isPalindrome(self, s:str) -> bool:
+        l, r = 0, len(s)-1
 
-        for i, num in enumerate(numbers):
-            if target - num in hash_map:
-                return [hash_map[target-num]+1, i+1]
-            else:
-                hash_map[num] = i
+        while l < r:
+            while l < r and not s[l].isalnum():
+                l += 1
+            while l < r and not s[r].isalnum():
+                r -= 1
+            if s[l].lower() != s[r].lower():
+                return False
